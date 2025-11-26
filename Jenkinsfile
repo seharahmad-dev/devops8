@@ -10,7 +10,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh 'python3 -m unittest discover -s .'
+                sh 'python -m unittest discover -s .'
             }
         }
         stage('Deploy') {
@@ -26,7 +26,7 @@ pipeline {
             steps {
                 echo 'Running application...'
                 sh '''
-                nohup python3 ${WORKSPACE}/python-app-deploy/app.py > ${WORKSPACE}/python-app-deploy/app.log 2>&1 &
+                nohup python ${WORKSPACE}/python-app-deploy/app.py > ${WORKSPACE}/python-app-deploy/app.log 2>&1 &
                 echo $! > ${WORKSPACE}/python-app-deploy/app.pid
                 '''
             }
@@ -35,7 +35,7 @@ pipeline {
             steps {
                 echo 'Testing application...'
                 sh '''
-                python3 ${WORKSPACE}/test_app.py
+                python ${WORKSPACE}/test_app.py
                 '''
             }
         }
